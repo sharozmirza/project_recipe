@@ -1,6 +1,6 @@
 """Views/APIs for the recipe app."""
 
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, permissions
 from rest_framework.response import Response
 
 from recipe.models import Ingredient, Recipe, Step, User
@@ -15,6 +15,7 @@ class UserViewSet(mixins.ListModelMixin,
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'username'
 
     def get(self, request, *args, **kwargs):
@@ -44,5 +45,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     """
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
+    permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'name'
 
